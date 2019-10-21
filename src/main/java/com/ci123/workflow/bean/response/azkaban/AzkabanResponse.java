@@ -1,4 +1,4 @@
-package com.ci123.workflow.bean.response;
+package com.ci123.workflow.bean.response.azkaban;
 
 /**
  * Copyright (c) 2018-2028 Corp-ci All Rights Reserved

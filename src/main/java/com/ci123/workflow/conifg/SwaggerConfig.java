@@ -22,9 +22,9 @@ public class SwaggerConfig {
     // 接口版本号
     private final String version = "1.0";
     // 接口大标题
-    private final String title = "SpringBoot示例工程";
+    private final String title = "任务调度框架API接口";
     // 具体的描述
-    private final String description = "API文档自动生成示例";
+    private final String description = "任务调度框架API接口调用测试，Azkaban/Oozie/AirFlow";
     // 服务说明url
     private final String termsOfServiceUrl = "http://www.kingeid.com";
     // licence
@@ -32,7 +32,7 @@ public class SwaggerConfig {
     // licnce url
     private final String licenseUrl = "https://mit-license.org/";
     // 接口作者联系方式
-    private final Contact contact = new Contact("SunYang", "https://github.com/calebman", "chenjianhui0428@gmail.com");
+    private final Contact contact = new Contact("SunYang", "https://github.com/sun-iot/workflow", "sunyang.iot@gmail.com");
 
     @Bean
     public Docket buildDocket() {
