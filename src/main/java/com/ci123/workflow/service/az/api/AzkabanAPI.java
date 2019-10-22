@@ -1,6 +1,6 @@
 package com.ci123.workflow.service.az.api;
 
-import com.ci123.workflow.bean.response.azkaban.AzBaseResponse;
+import com.ci123.workflow.bean.response.azkaban.base.BaseResponse;
 
 /**
  * Copyright (c) 2018-2028 Corp-ci All Rights Reserved
@@ -13,6 +13,5 @@ import com.ci123.workflow.bean.response.azkaban.AzBaseResponse;
  */
 public interface AzkabanAPI {
 
-    AzBaseResponse loginAZ(String username , String password);
-    AzBaseResponse createProject(String name, String desc);
+    BaseResponse createProject(String name, String desc);
 }

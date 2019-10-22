@@ -1,10 +1,19 @@
 package com.ci123.workflow.controller;
 
+import com.ci123.workflow.bean.module.az.Project;
+
+import com.ci123.workflow.bean.response.azkaban.base.BaseResponse;
+import com.ci123.workflow.conifg.az.Configuration;
+import com.ci123.workflow.service.az.api.AzkabanAPI;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,12 +33,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class AzkabanController {
     Logger logger = LoggerFactory.getLogger(AzkabanController.class);
 
-    @RequestMapping(value = "/az/login" , method = RequestMethod.POST )
+    @Autowired
+    private AzkabanAPI azkabanAPI ;
+
+    @RequestMapping(value = "/az/manager" , method = RequestMethod.POST )
     @ResponseBody
-    @ApiOperation(value = "登陆到 Azkaban ", httpMethod = "POST", produces = "application/json" , consumes = "application.json")
-    public String loginAzkaban(){
-        logger.info("\"state\": 200 , \"msg\":\"OK\"");
-        return "\"state\": 200 , \"msg\":\"OK\"";
+    @ApiOperation(value = "create a Azkaban Project ", httpMethod = "POST", produces = "application/json" , consumes = "application.json")
+    public String createAzkaban(@RequestBody @ApiParam(value = "create a azkaban project" , required = true ) Project project){
+        // 发送请求到 Azkaban 服务器
+        BaseResponse response = azkabanAPI.createProject(project.getName(), project.getDescription());
+        System.out.println("status:" + response.getStatus());
+        System.out.println("message:" + response.getMessage());
+        System.out.println(Configuration.SESSION_ID);
+
+
+
+//        return "\"status\":200,\"msg\":\"OK\"";  //"status":200,"msg":"OK"
+        return response.getMessage();
     }
 }
 

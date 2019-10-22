@@ -1,6 +1,7 @@
-package com.ci123.workflow.bean.response.azkaban;
+package com.ci123.workflow.bean.response.azkaban.handler;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ci123.workflow.bean.response.azkaban.base.BaseResponse;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.client.fluent.Response;
@@ -23,7 +24,7 @@ import java.util.Objects;
 public class AzResponseHandler {
     private static Logger log = LoggerFactory.getLogger(AzResponseHandler.class);
 
-    public static <T extends AzBaseResponse> T handle(Request request, Class<T> tClass) {
+    public static <T extends BaseResponse> T handle(Request request, Class<T> tClass) {
         T response = null;
         try {
             Response res = request.execute();
@@ -42,16 +43,16 @@ public class AzResponseHandler {
         return response;
     }
 
-    public static AzBaseResponse handle(Request request) {
-        return handle(request, AzBaseResponse.class);
+    public static BaseResponse handle(Request request) {
+        return handle(request, BaseResponse.class);
     }
 
 
-    public static AzBaseResponse handle(String content) {
-        return handle(content, AzBaseResponse.class);
+    public static BaseResponse handle(String content) {
+        return handle(content, BaseResponse.class);
     }
 
-    public static <T extends AzBaseResponse> T handle(HttpEntity entity, Class<T> tClass) {
+    public static <T extends BaseResponse> T handle(HttpEntity entity, Class<T> tClass) {
         T response = null;
         try {
             String content = EntityUtils.toString(entity);
@@ -62,7 +63,7 @@ public class AzResponseHandler {
         return response;
     }
 
-    public static <T extends AzBaseResponse> T handle(String content, Class<T> tClass) {
+    public static <T extends BaseResponse> T handle(String content, Class<T> tClass) {
         T response = null;
         try {
             response = JSONObject.parseObject(content, tClass);

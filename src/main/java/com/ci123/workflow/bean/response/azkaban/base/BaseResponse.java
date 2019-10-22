@@ -1,4 +1,4 @@
-package com.ci123.workflow.bean.response.azkaban;
+package com.ci123.workflow.bean.response.azkaban.base;
 
 import lombok.Data;
 
@@ -14,7 +14,7 @@ import java.util.Objects;
  * Created by SunYang on 2019/10/21 17:15
  */
 @Data
-public class AzBaseResponse {
+public class BaseResponse {
     public static final String SUCCESS = "success";
     public static final String ERROR = "error";
 
