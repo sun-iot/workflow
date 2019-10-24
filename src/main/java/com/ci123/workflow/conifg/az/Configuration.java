@@ -10,7 +10,6 @@ package com.ci123.workflow.conifg.az;
  * Created by SunYang on 2019/10/22 15:07
  */
 public class Configuration {
-    public static String SESSION_ID = "f2660c3e-e4d2-4f59-9ebb-c2706f0e63fd";
     public static final String DELETE_PROJECT = "{0}/manager?delete=true&project={1}&session.id={2}";
     public static final String FETCH_PROJECT_FLOWS = "{0}/manager?ajax=fetchprojectflows&session.id={1}&project={2}";
     public static final String EXECUTE_FLOW = "{0}/executor?ajax=executeFlow&session.id={1}&project={2}&flow={3}";

@@ -2,6 +2,8 @@ package com.ci123.workflow.controller;
 
 import com.ci123.workflow.bean.module.az.Project;
 
+import com.ci123.workflow.bean.module.az.Upload;
+import com.ci123.workflow.bean.response.azkaban.CreateResponse;
 import com.ci123.workflow.bean.response.azkaban.base.BaseResponse;
 import com.ci123.workflow.conifg.az.Configuration;
 import com.ci123.workflow.service.az.api.AzkabanAPI;
@@ -13,10 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Copyright (c) 2018-2028 Corp-ci All Rights Reserved
@@ -36,20 +35,38 @@ public class AzkabanController {
     @Autowired
     private AzkabanAPI azkabanAPI ;
 
-    @RequestMapping(value = "/az/manager" , method = RequestMethod.POST )
+    @RequestMapping(value = "/az/manager/create" , method = RequestMethod.POST )
     @ResponseBody
-    @ApiOperation(value = "create a Azkaban Project ", httpMethod = "POST", produces = "application/json" , consumes = "application.json")
-    public String createAzkaban(@RequestBody @ApiParam(value = "create a azkaban project" , required = true ) Project project){
-        // 发送请求到 Azkaban 服务器
-        BaseResponse response = azkabanAPI.createProject(project.getName(), project.getDescription());
-        System.out.println("status:" + response.getStatus());
-        System.out.println("message:" + response.getMessage());
-        System.out.println(Configuration.SESSION_ID);
-
-
-
-//        return "\"status\":200,\"msg\":\"OK\"";  //"status":200,"msg":"OK"
-        return response.getMessage();
+    @ApiOperation(value = "create a Azkaban Project ", httpMethod = "POST", produces = "application/json" , consumes = "application/json")
+    public String createProject(@RequestBody @ApiParam(value = "the name of the project and the description of the project " , required = true )Project project){
+        System.out.println(project.getDescription());
+        CreateResponse response = azkabanAPI.createProject(project.getName(), project.getDescription());
+        return response.toString();
     }
+
+    @GetMapping("/az/manager/delete")
+    @ResponseBody
+    @ApiOperation(value = "delete a Azkaban Project , and no response  ", httpMethod = "GET")
+    public void deleteProject(@RequestParam("project") String project){
+        BaseResponse response = azkabanAPI.deleteProject(project);
+    }
+
+    @PostMapping("/az/manager/upload")
+    @ResponseBody
+    @ApiOperation(value = "upload the project zip file. The type should be set as application/zip or application/x-zip-compressed",
+            httpMethod = "POST" ,
+            produces = "application/json",
+            consumes = "application/json")
+    public String uploadZip(@RequestBody @ApiParam(value = " " , required = true)Upload upload){
+        System.out.println(upload.getFile());
+
+
+
+
+        return "" ;
+    }
+
+
+
 }
 

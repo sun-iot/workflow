@@ -3,13 +3,8 @@ package com.ci123.workflow.bean.response.azkaban;
 import com.ci123.workflow.bean.response.azkaban.base.BaseResponse;
 
 /**
- * Copyright (c) 2018-2028 Corp-ci All Rights Reserved
- * <p>
- * Project: workflow
- * Package: com.ci123.workflow.bean.response.azkaban
- * Version: 1.0
- * <p>
- * Created by SunYang on 2019/10/22 15:04
+ * Created by shirukai on 2019-06-01 13:35
+ * 登录返回信息
  */
 public class LoginResponse extends BaseResponse {
     private String sessionId;

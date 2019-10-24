@@ -1,8 +1,7 @@
 package com.ci123.workflow.conifg.az;
 
 import com.ci123.workflow.service.az.api.AzkabanAPI;
-import com.ci123.workflow.service.az.service.AzkabanService;
-import com.ci123.workflow.service.proxy.az.AzkabanInvokeHJandlerBuilder;
+import com.ci123.workflow.service.proxy.AzkabanApiProxyBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,11 +28,10 @@ public class AzkabanConfig {
 
     @Bean
     public AzkabanAPI azkabanApi() {
-        System.out.println(uri);
-        return AzkabanInvokeHJandlerBuilder.create()
-                .setUrl(uri)
+        return AzkabanApiProxyBuilder.create()
+                .setUri(uri)
                 .setUsername(username)
                 .setPassword(password)
-                .builder();
+                .build();
     }
 }
