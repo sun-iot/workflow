@@ -1,12 +1,11 @@
 package com.ci123.workflow.controller;
 
-import com.ci123.workflow.bean.module.az.*;
+import com.ci123.workflow.bean.module.azkaban.*;
 
-import com.ci123.workflow.bean.module.az.Project;
+import com.ci123.workflow.bean.module.azkaban.Project;
 import com.ci123.workflow.bean.response.azkaban.*;
 import com.ci123.workflow.bean.response.azkaban.base.BaseResponse;
-import com.ci123.workflow.conifg.az.Configuration;
-import com.ci123.workflow.service.az.api.AzkabanAPI;
+import com.ci123.workflow.service.azkaban.api.AzkabanAPI;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

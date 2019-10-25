@@ -1,4 +1,4 @@
-package com.ci123.workflow.conifg.az;
+package com.ci123.workflow.config.azkaban;
 
 /**
  * Copyright (c) 2018-2028 Corp-ci All Rights Reserved

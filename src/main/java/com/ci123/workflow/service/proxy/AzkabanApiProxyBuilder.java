@@ -1,7 +1,7 @@
 package com.ci123.workflow.service.proxy;
 
-import com.ci123.workflow.service.az.api.AzkabanAPI;
-import com.ci123.workflow.service.az.service.AzkabanAPIImpl;
+import com.ci123.workflow.service.azkaban.api.AzkabanAPI;
+import com.ci123.workflow.service.azkaban.service.AzkabanAPIImpl;
 
 import java.lang.reflect.Proxy;
 

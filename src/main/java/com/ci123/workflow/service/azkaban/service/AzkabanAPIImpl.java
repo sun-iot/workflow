@@ -1,27 +1,21 @@
-package com.ci123.workflow.service.az.service;
+package com.ci123.workflow.service.azkaban.service;
 
 import com.ci123.workflow.bean.response.azkaban.*;
 import com.ci123.workflow.bean.response.azkaban.base.BaseResponse;
-import com.ci123.workflow.conifg.az.Configuration;
-import com.ci123.workflow.service.az.api.AzkabanAPI;
-import com.ci123.workflow.service.az.util.MapBody;
+import com.ci123.workflow.config.azkaban.Configuration;
+import com.ci123.workflow.service.azkaban.api.AzkabanAPI;
 import com.ci123.workflow.service.http.GetHttpClientSSL;
 import com.ci123.workflow.service.http.PostClientSSL;
 import org.apache.http.HttpEntity;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.fluent.Response;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.client.SimpleClientHttpRequestFactory;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
-import java.net.URI;
 import java.text.MessageFormat;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

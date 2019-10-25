@@ -1,4 +1,4 @@
-package com.ci123.workflow.conifg;
+package com.ci123.workflow.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

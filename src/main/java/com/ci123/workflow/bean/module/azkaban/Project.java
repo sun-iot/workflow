@@ -1,7 +1,6 @@
-package com.ci123.workflow.bean.module.az;
+package com.ci123.workflow.bean.module.azkaban;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

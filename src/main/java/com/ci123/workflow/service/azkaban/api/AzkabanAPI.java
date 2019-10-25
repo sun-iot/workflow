@@ -1,4 +1,4 @@
-package com.ci123.workflow.service.az.api;
+package com.ci123.workflow.service.azkaban.api;
 
 import com.ci123.workflow.bean.response.azkaban.*;
 import com.ci123.workflow.bean.response.azkaban.base.BaseResponse;

@@ -1,11 +1,10 @@
-package com.ci123.workflow.service.az.util;
+package com.ci123.workflow.service.azkaban.util;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Copyright (c) 2018-2028 Corp-ci All Rights Reserved

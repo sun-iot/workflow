@@ -1,4 +1,4 @@
-package com.ci123.workflow.bean.module.az;
+package com.ci123.workflow.bean.module.azkaban;
 
 import lombok.Data;
 

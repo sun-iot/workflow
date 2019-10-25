@@ -1,6 +1,6 @@
-package com.ci123.workflow.conifg.az;
+package com.ci123.workflow.config.azkaban;
 
-import com.ci123.workflow.service.az.api.AzkabanAPI;
+import com.ci123.workflow.service.azkaban.api.AzkabanAPI;
 import com.ci123.workflow.service.proxy.AzkabanApiProxyBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
