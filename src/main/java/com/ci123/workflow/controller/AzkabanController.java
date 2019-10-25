@@ -1,11 +1,11 @@
 package com.ci123.workflow.controller;
 
-import com.ci123.workflow.bean.module.azkaban.*;
+import com.ci123.workflow.azkaban.bean.module.*;
+import com.ci123.workflow.azkaban.bean.module.Project;
 
-import com.ci123.workflow.bean.module.azkaban.Project;
-import com.ci123.workflow.bean.response.azkaban.*;
-import com.ci123.workflow.bean.response.azkaban.base.BaseResponse;
-import com.ci123.workflow.service.azkaban.api.AzkabanAPI;
+import com.ci123.workflow.azkaban.bean.response.*;
+import com.ci123.workflow.azkaban.bean.response.base.BaseResponse;
+import com.ci123.workflow.azkaban.service.api.AzkabanAPI;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -165,7 +165,7 @@ public class AzkabanController {
     @ResponseBody
     @ApiOperation(value = "Flexible scheduling using Cron" , httpMethod = "POST" , produces = "application/json" , consumes = "application/json")
     @Deprecated
-    public String scheduleCronFlow(@RequestBody@ApiParam(value = "" ,required = true)ScheduleCronFlow scheduleCronFlow){
+    public String scheduleCronFlow(@RequestBody@ApiParam(value = "" ,required = true) ScheduleCronFlow scheduleCronFlow){
         ScheduleCronFlowResponse response = azkabanAPI.scheduleCronFlow(scheduleCronFlow.getProject(), scheduleCronFlow.getFlow(), scheduleCronFlow.getCron());
         return response.toString();
     }
@@ -173,7 +173,7 @@ public class AzkabanController {
     @PostMapping("/az/manager/fetch/schedule")
     @ResponseBody
     @ApiOperation(value = "Fetch a Schedule",httpMethod = "POST",produces = "application/json",consumes = "application/json")
-    public String fetchSchedule(@RequestBody@ApiParam(value = "",required = true)FetchSchedule fetchSchedule){
+    public String fetchSchedule(@RequestBody@ApiParam(value = "",required = true) FetchSchedule fetchSchedule){
         FetchScheduleResponse response = azkabanAPI.fetchSchedule(fetchSchedule.getProject(), fetchSchedule.getFlow());
         return response.toString();
     }

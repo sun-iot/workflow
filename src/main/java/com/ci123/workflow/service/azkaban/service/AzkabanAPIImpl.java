@@ -1,11 +1,12 @@
 package com.ci123.workflow.service.azkaban.service;
 
-import com.ci123.workflow.bean.response.azkaban.*;
-import com.ci123.workflow.bean.response.azkaban.base.BaseResponse;
-import com.ci123.workflow.config.azkaban.Configuration;
-import com.ci123.workflow.service.azkaban.api.AzkabanAPI;
-import com.ci123.workflow.service.http.GetHttpClientSSL;
-import com.ci123.workflow.service.http.PostClientSSL;
+
+import com.ci123.workflow.azkaban.bean.response.*;
+import com.ci123.workflow.azkaban.bean.response.base.BaseResponse;
+import com.ci123.workflow.azkaban.config.Configuration;
+import com.ci123.workflow.azkaban.service.api.AzkabanAPI;
+import com.ci123.workflow.azkaban.service.http.GetHttpClientSSL;
+import com.ci123.workflow.azkaban.service.http.PostClientSSL;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.fluent.Response;
 import org.apache.commons.lang3.StringUtils;
