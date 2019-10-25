@@ -15,8 +15,7 @@ import com.ci123.workflow.bean.response.azkaban.base.BaseResponse;
  */
 
 public class CreateResponse extends BaseResponse {
-    private String status ;
-    private String message ;
+
     private String path ;
     private String action ;
 
@@ -28,25 +27,6 @@ public class CreateResponse extends BaseResponse {
         this.path = path;
     }
 
-    @Override
-    public String getStatus() {
-        return status;
-    }
-
-    @Override
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    @Override
-    public String getMessage() {
-        return message;
-    }
-
-    @Override
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
     public String getAction() {
         return action;
@@ -58,12 +38,6 @@ public class CreateResponse extends BaseResponse {
 
     @Override
     public String toString(){
-//        JSONObject json = new JSONObject();
-//        json.put("status" , status);
-//        json.put("message" , message);
-//        json.put("path" , path);
-//        json.put("action" , action);
-//        return json.toString() ;
-        return JSON.toJSONString(this).toString() ;
+        return JSON.toJSONString(this) ;
     }
 }

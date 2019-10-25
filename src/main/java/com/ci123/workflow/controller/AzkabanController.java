@@ -54,7 +54,7 @@ public class AzkabanController {
     @ApiOperation(value = "delete a Azkaban Project , and no response  ",
             httpMethod = "GET")
     public void deleteProject(@RequestParam("project") @ApiParam(value = "删除的 project ") String project) {
-        BaseResponse response = azkabanAPI.deleteProject(project);
+        azkabanAPI.deleteProject(project);
     }
 
     @PostMapping("/az/manager/upload")

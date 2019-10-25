@@ -41,7 +41,6 @@ public class AzkabanAPIImpl implements AzkabanAPI {
     private String sessionId = "b1d4f665-f4b9-4e7d-b83a-b928b41cc323";
     private PostClientSSL postClientSSL;
     private GetHttpClientSSL getClientSSL;
-    private RestTemplate restTemplate ;
 
     public AzkabanAPIImpl(String uri, String username, String password) {
         this.uri = uri;
@@ -50,37 +49,23 @@ public class AzkabanAPIImpl implements AzkabanAPI {
         postClientSSL = new PostClientSSL();
         getClientSSL = new GetHttpClientSSL();
 
-        SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
-        requestFactory.setConnectTimeout(2000);
-        requestFactory.setReadTimeout(2000);
-        restTemplate = new RestTemplate(requestFactory);
-
     }
 
     @Override
     public CreateResponse createProject(String name, String desc) {
-
-        Map<String, String> body = new HashMap<>();
-        body.put("session.id", sessionId);
-        body.put("action", "create");
-        body.put("name", name);
-        body.put("description", desc);
-
-        List<NameValuePair> content = MapBody.create()
-                .addBody("session.id", sessionId)
-                .addBody("action", "create")
-                .addBody("name", name)
-                .addBody("name", desc)
-                .build();
-
-        String result = postClientSSL.doPost(uri + "/manager", content, "application/x-www-form-urlencoded");
+        Map<String,String> body = new HashMap<>();
+        body.put("session.id" ,sessionId);
+        body.put("action","create");
+        body.put("name",name);
+        body.put("description" , desc);
+        System.out.println("name:"+name + "\tdescription:" + desc);
+        String result = postClientSSL.doPost(uri + "/manager", body ,"application/x-www-form-urlencoded");
         return ResponseHandler.handle(result, CreateResponse.class);
     }
 
     @Override
     public BaseResponse deleteProject(String name) {
         String result = getClientSSL.doGet(MessageFormat.format(Configuration.DELETE_PROJECT, uri, name, sessionId));
-        // 在进行 删除 project 时， Azkaban不会返回任何值
         result = "\"status\":\"success\",\"message\":\"delete project successfully\"";
         return ResponseHandler.handle(result);
     }

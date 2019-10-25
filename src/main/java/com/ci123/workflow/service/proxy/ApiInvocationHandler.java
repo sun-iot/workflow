@@ -64,44 +64,25 @@ public class ApiInvocationHandler implements InvocationHandler {
         int tryTime = 1;
         try {
             azkabanApi.login();
-//            while (tryTime < RETRY ){
-//                // 指定代理方法
-//                result = method.invoke(azkabanApi, args);
-//                // 判断是否执行成功
-//                if (Objects.nonNull(result) && !this.isDefault(method.getName())) {
-//                    Class superClass = result.getClass().getSuperclass();
-//                    if (Object.class.equals(superClass)) {
-//                        superClass = result.getClass();
-//                    }
-//                    Field field = superClass.getDeclaredField("status");
-//                    field.setAccessible(true);
-//                    if (BaseResponse.SUCCESS.equals(field.get(result))) {
-//                        log.info("Execute the azkaban's API {} successfully.", method.getName());
-//                        return result;
-//                    }else {
-//                        log.error("Execute the azkaban's API {} failed.", method.getName());
-//                    }
-//
-//                }
-//                tryTime ++ ;
-//            }
-            // 指定代理方法
-            result = method.invoke(azkabanApi, args);
-            // 判断是否执行成功
-            if (Objects.nonNull(result) && !this.isDefault(method.getName())) {
-                Class superClass = result.getClass().getSuperclass();
-                if (Object.class.equals(superClass)) {
-                    superClass = result.getClass();
+            while (tryTime < RETRY) {
+                // 指定代理方法
+                result = method.invoke(azkabanApi, args);
+                // 判断是否执行成功
+                if (Objects.nonNull(result) && !this.isDefault(method.getName())) {
+                    Class superClass = result.getClass().getSuperclass();
+                    if (Object.class.equals(superClass)) {
+                        superClass = result.getClass();
+                    }
+                    Field field = superClass.getDeclaredField("status");
+                    field.setAccessible(true);
+                    if (BaseResponse.SUCCESS.equals(field.get(result))) {
+                        log.info("Execute the azkaban's API {} successfully.", method.getName());
+                        return result;
+                    } else {
+                        log.error("Execute the azkaban's API {} failed.", method.getName());
+                    }
                 }
-                Field field = superClass.getDeclaredField("status");
-                field.setAccessible(true);
-                if (BaseResponse.SUCCESS.equals(field.get(result))) {
-                    log.info("Execute the azkaban's API {} successfully.", method.getName());
-                    return result;
-                }else {
-                    log.error("Execute the azkaban's API {} failed.", method.getName());
-                }
-
+                tryTime++;
             }
         } catch (Exception e) {
             // 如果返回结果为null,捕获异常并实重新生成结果实例，设置异常信息

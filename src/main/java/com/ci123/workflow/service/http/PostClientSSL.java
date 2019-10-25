@@ -36,11 +36,11 @@ import java.io.IOException;
 public class PostClientSSL {
     private Logger logger = LoggerFactory.getLogger(PostClientSSL.class);
 
-    public String doPost(String url ,List<NameValuePair> content ,String header){
+    public String doPost(String url ,List<NameValuePair> content){
         CloseableHttpClient httpClient = HttpClientSSL.buildSSLCloseableHttpClient();
         CloseableHttpResponse response = null ;
         HttpPost httpPost = new HttpPost(url);
-        httpPost.addHeader("Content-Type", header);
+        httpPost.addHeader("Content-Type", "application/x-www-form-urlencoded");
         String result = "" ;
         if (content.size() > 0){
             try {
