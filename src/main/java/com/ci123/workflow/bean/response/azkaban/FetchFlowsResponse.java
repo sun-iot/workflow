@@ -1,5 +1,6 @@
 package com.ci123.workflow.bean.response.azkaban;
 
+import com.alibaba.fastjson.JSON;
 import com.ci123.workflow.bean.response.azkaban.base.BaseResponse;
 
 import java.util.List;
@@ -37,4 +38,8 @@ public class FetchFlowsResponse extends BaseResponse {
         this.flows = flows;
     }
 
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
+    }
 }

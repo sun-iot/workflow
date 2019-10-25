@@ -1,5 +1,6 @@
 package com.ci123.workflow.bean.response.azkaban;
 
+import com.alibaba.fastjson.JSON;
 import com.ci123.workflow.bean.response.azkaban.base.BaseResponse;
 
 /**
@@ -35,4 +36,8 @@ public class FetchExecJobLogs extends BaseResponse {
         this.length = length;
     }
 
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
+    }
 }

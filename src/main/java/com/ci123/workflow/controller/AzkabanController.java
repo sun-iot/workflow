@@ -1,9 +1,9 @@
 package com.ci123.workflow.controller;
 
-import com.ci123.workflow.bean.module.az.Project;
+import com.ci123.workflow.bean.module.az.*;
 
-import com.ci123.workflow.bean.module.az.Upload;
-import com.ci123.workflow.bean.response.azkaban.CreateResponse;
+import com.ci123.workflow.bean.module.az.Project;
+import com.ci123.workflow.bean.response.azkaban.*;
 import com.ci123.workflow.bean.response.azkaban.base.BaseResponse;
 import com.ci123.workflow.conifg.az.Configuration;
 import com.ci123.workflow.service.az.api.AzkabanAPI;
@@ -27,18 +27,23 @@ import org.springframework.web.bind.annotation.*;
  * Created by SunYang on 2019/10/21 16:10
  */
 @Controller
-@RequestMapping(value = "/api/v1" ,produces="application/json;charset=utf-8")
-@Api(value = "AzkabanController", tags = {"azkaban 的接口 api 示例"})
+@RequestMapping(value = "/api/v1",
+        produces = "application/json;charset=utf-8")
+@Api(value = "AzkabanController",
+        tags = {"azkaban 的接口 api 示例"})
 public class AzkabanController {
     Logger logger = LoggerFactory.getLogger(AzkabanController.class);
 
     @Autowired
-    private AzkabanAPI azkabanAPI ;
+    private AzkabanAPI azkabanAPI;
 
-    @RequestMapping(value = "/az/manager/create" , method = RequestMethod.POST )
+    @RequestMapping(value = "/az/manager/create", method = RequestMethod.POST)
     @ResponseBody
-    @ApiOperation(value = "create a Azkaban Project ", httpMethod = "POST", produces = "application/json" , consumes = "application/json")
-    public String createProject(@RequestBody @ApiParam(value = "the name of the project and the description of the project " , required = true )Project project){
+    @ApiOperation(value = "create a Azkaban Project ",
+            httpMethod = "POST",
+            produces = "application/json",
+            consumes = "application/json")
+    public String createProject(@RequestBody @ApiParam(value = "the name of the project and the description of the project ", required = true) Project project) {
         System.out.println(project.getDescription());
         CreateResponse response = azkabanAPI.createProject(project.getName(), project.getDescription());
         return response.toString();
@@ -46,26 +51,141 @@ public class AzkabanController {
 
     @GetMapping("/az/manager/delete")
     @ResponseBody
-    @ApiOperation(value = "delete a Azkaban Project , and no response  ", httpMethod = "GET")
-    public void deleteProject(@RequestParam("project") String project){
+    @ApiOperation(value = "delete a Azkaban Project , and no response  ",
+            httpMethod = "GET")
+    public void deleteProject(@RequestParam("project") @ApiParam(value = "删除的 project ") String project) {
         BaseResponse response = azkabanAPI.deleteProject(project);
     }
 
     @PostMapping("/az/manager/upload")
     @ResponseBody
     @ApiOperation(value = "upload the project zip file. The type should be set as application/zip or application/x-zip-compressed",
-            httpMethod = "POST" ,
+            httpMethod = "POST",
             produces = "application/json",
             consumes = "application/json")
-    public String uploadZip(@RequestBody @ApiParam(value = " " , required = true)Upload upload){
+    public String uploadProjectZip(@RequestBody @ApiParam(value = "project name and the zip of the project", required = true) Upload upload) {
         System.out.println(upload.getFile());
-
-
-
-
-        return "" ;
+        ProjectZipResponse projectZipResponse = azkabanAPI.uploadProjectZip(upload.getFile(), upload.getProject());
+        return projectZipResponse.toString();
     }
 
+    @GetMapping("/az/manager/fetch/flows/project")
+    @ResponseBody
+    @ApiOperation(value = "fetch follows of the project",
+            httpMethod = "GET",
+            produces = "application/json")
+    public String fetchProjectFlows(@RequestParam("project") @ApiParam(value = "the project name", required = true) String project) {
+        FetchFlowsResponse fetchFlowsResponse = azkabanAPI.fetchProjectFlows(project);
+        return fetchFlowsResponse.toString();
+    }
+
+    @GetMapping("/az/manager/fetch/flows/job")
+    @ResponseBody
+    @ApiOperation(value = "fetch jobs of a flow",
+            httpMethod = "GET",
+            produces = "application/json")
+    public String fetchJobFlows(@RequestParam("project") @ApiParam(value = "the project name", required = true) String project,
+                                @RequestParam("flow") @ApiParam(value = "the flow name", required = true) String flow) {
+        FetchExecFlowResponse fetchExecFlowResponse = azkabanAPI.fetchJobFlows(project, flow);
+
+        return fetchExecFlowResponse.toString();
+    }
+
+    @GetMapping("/az/manager/fetch/execute/flows")
+    @ResponseBody
+    @ApiOperation(value = "fetch executions of a flow",
+            httpMethod = "GET",
+            produces = "application/json")
+    public String fetchFlowExecutions(@RequestParam("project") @ApiParam(value = "The project name to be fetched", required = true) String project,
+                                      @RequestParam("flow") @ApiParam(value = "The flow id to be fetched", required = true) String flow,
+                                      @RequestParam("start") @ApiParam(value = "The start index(inclusive) of the returned list", required = true) Integer start,
+                                      @RequestParam("length") @ApiParam(value = "The max length of the returned list", required = true) Integer length) {
+        FetchFlowExecutionsResponse response = azkabanAPI.fetchFlowExecutions(project, flow, start, length);
+        return response.toString();
+    }
+
+    @GetMapping("/az/manager/fetch/execute/running")
+    @ResponseBody
+    @ApiOperation(value = "Fetch Running Executions of a Flow ",
+            httpMethod = "GET",
+            produces = "application/json")
+    public String fetchRunningExecutionFlow(@RequestParam("project") @ApiParam(value = "The project name to be fetched", required = true) String project,
+                                            @RequestParam("flow") @ApiParam(value = "The flow id to be fetched", required = true) String flow) {
+        FetchRunningExecutionFlowResponse response = azkabanAPI.fetchRunningExecutionFlow(project, flow);
+        return response.toString();
+    }
+
+    @GetMapping("/az/manager/execute/flow")
+    @ResponseBody
+    @ApiOperation(value = "execute a flow",
+            httpMethod = "GET",
+            produces = "application/json")
+    public String executeFlow(@RequestParam("project") @ApiParam(value = "the project name", required = true) String project,
+                              @RequestParam("flow") @ApiParam(value = "the flow name", required = true) String flow) {
+        ExecuteFlowResponse executeFlowResponse = azkabanAPI.executeFlow(project, flow);
+        return executeFlowResponse.toString();
+    }
+
+    @GetMapping("/az/manager/cancel/flow")
+    @ResponseBody
+    @ApiOperation(value = "cancel a flow",
+            httpMethod = "GET",
+            produces = "application/json")
+    public String cancelFlow(@RequestParam("execid") @ApiParam(value = "The execution id. ", required = true) String execid){
+        BaseResponse response = azkabanAPI.cancelFlow(execid);
+        return response.toString();
+    }
+
+    @GetMapping("/az/manager/fetch/execute/flow")
+    @ResponseBody
+    @ApiOperation(value = "fetches all the detailed information of that execution",
+            httpMethod = "GET",
+            produces = "application/json")
+    public String fetchExecFlow(@RequestParam("execid") @ApiParam(value = "The execution id. ", required = true) String execid){
+        FetchExecFlowResponse response = azkabanAPI.fetchExecFlow(execid);
+        return response.toString();
+    }
+
+    @GetMapping("/az/manager/fetch/execute/logs")
+    @ResponseBody
+    @ApiOperation(value = "",httpMethod = "GET",produces = "application/json")
+    public String fetchExecJobLogs(@RequestParam("execid")@ApiParam(value = "The unique id for an execution",required = true) String execid ,
+                                   @RequestParam("jobid")@ApiParam(value = "The unique id for the job to be fetched",required = true)String jobid,
+                                   @RequestParam("offest")@ApiParam(value = "The offset for the log data",required = true)Integer offest,
+                                   @RequestParam("length")@ApiParam(value = "The length of the log data",required = true)Integer length){
+        FetchExecJobLogs response = azkabanAPI.fetchExecJobLogs(execid, jobid, offest, length);
+        return response.toString();
+    }
+    @GetMapping("/az/manager/fetch/project")
+    public String fetchAllProjects(){
+        FetchAllProjectsResponse response = azkabanAPI.fetchAllProjects();
+        return response.toString();
+    }
+
+    @PostMapping("/az/manager/schedule/cron/flow")
+    @ResponseBody
+    @ApiOperation(value = "Flexible scheduling using Cron" , httpMethod = "POST" , produces = "application/json" , consumes = "application/json")
+    @Deprecated
+    public String scheduleCronFlow(@RequestBody@ApiParam(value = "" ,required = true)ScheduleCronFlow scheduleCronFlow){
+        ScheduleCronFlowResponse response = azkabanAPI.scheduleCronFlow(scheduleCronFlow.getProject(), scheduleCronFlow.getFlow(), scheduleCronFlow.getCron());
+        return response.toString();
+    }
+
+    @PostMapping("/az/manager/fetch/schedule")
+    @ResponseBody
+    @ApiOperation(value = "Fetch a Schedule",httpMethod = "POST",produces = "application/json",consumes = "application/json")
+    public String fetchSchedule(@RequestBody@ApiParam(value = "",required = true)FetchSchedule fetchSchedule){
+        FetchScheduleResponse response = azkabanAPI.fetchSchedule(fetchSchedule.getProject(), fetchSchedule.getFlow());
+        return response.toString();
+    }
+
+    @PostMapping("/az/manager/fetch/schedule/remove")
+    @ResponseBody
+    @ApiOperation(value = "remove a Schedule",httpMethod = "POST",produces = "application/json",consumes = "application/json")
+    public String removeSchedule(@RequestBody@ApiParam(value = "",required = true) RemoveSchedule removeSchedule){
+        BaseResponse response = azkabanAPI.removeSchedule(removeSchedule.getScheduleId());
+        return response.toString();
+    }
 
 
 }

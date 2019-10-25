@@ -1,6 +1,7 @@
 package com.ci123.workflow.service.http;
 
 import com.ci123.workflow.service.http.ssl.HttpClientSSL;
+import lombok.Builder;
 import org.apache.http.*;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -15,7 +16,9 @@ import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.Map.Entry;
 import java.io.IOException;
@@ -31,27 +34,97 @@ import java.io.IOException;
  * Created by SunYang on 2019/10/24 13:46
  */
 public class PostClientSSL {
-    private Logger logger = LoggerFactory.getLogger(GetHttpClientSSL.class);
+    private Logger logger = LoggerFactory.getLogger(PostClientSSL.class);
+
+    public String doPost(String url ,List<NameValuePair> content ,String header){
+        CloseableHttpClient httpClient = HttpClientSSL.buildSSLCloseableHttpClient();
+        CloseableHttpResponse response = null ;
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.addHeader("Content-Type", header);
+        String result = "" ;
+        if (content.size() > 0){
+            try {
+                UrlEncodedFormEntity entity = new UrlEncodedFormEntity(content, "UTF-8");
+                httpPost.setEntity(entity);
+            } catch (UnsupportedEncodingException e) {
+                logger.error("UrlEncodedFormEntity failed {}" , e.getMessage());
+                return "\"status\":\"error\",\"message\":"+e.getMessage()+""; // "status":"error","message":e.getMessage
+            }
+
+            try {
+                response = httpClient.execute(httpPost);
+                result = dealResponse(response);
+            } catch (IOException e) {
+                logger.error("httpClient POST EXECUTOR failed {}" , e.getMessage());
+                return "\"status\":\"error\",\"message\":"+e.getMessage()+""; // "status":"error","message":e.getMessage
+            }finally {
+                httpPost.abort();
+                if (response != null) {
+                    EntityUtils.consumeQuietly(response.getEntity());
+                }
+                release(httpClient);
+            }
+        }
+        return result;
+    }
+
+    public String doPost(String url , HttpEntity entity ){
+        CloseableHttpClient httpClient = HttpClientSSL.buildSSLCloseableHttpClient();
+        CloseableHttpResponse response = null ;
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.setEntity(entity);
+        String result ="" ;
+        try {
+            response= httpClient.execute(httpPost);
+            result = dealResponse(response);
+        } catch (IOException e) {
+            logger.error("httpClient POST executor failed {}" , e.getMessage());
+            return "\"status\":\"error\",\"message\":"+e.getMessage()+""; // "status":"error","message":e.getMessage
+        }finally {
+            httpPost.abort();
+            if (response != null) {
+                EntityUtils.consumeQuietly(response.getEntity());
+            }
+            release(httpClient);
+        }
+        return result ;
+    }
+
+    private String dealResponse(CloseableHttpResponse response){
+        String result = "" ;
+        if (response != null && response.getStatusLine().getStatusCode() == 200) {
+            HttpEntity entity = response.getEntity();
+            try {
+                result = EntityUtils.toString(entity);
+            } catch (IOException e) {
+                logger.error("entity to string failed {}" , e.getMessage());
+                return "\"status\":\"error\",\"message\":"+e.getMessage()+""; // "status":"error","message":e.getMessage
+            }
+        }
+        return result ;
+    }
+
     /**
      * @param url
      * @param contentMap
      * @return
      */
-    public String doPost(String url, Map<String, String> contentMap) {
+    public String doPost(String url, Map<String, String> contentMap ,String contentType) {
         String result = null;
         CloseableHttpClient httpClient = HttpClientSSL.buildSSLCloseableHttpClient();
         HttpPost post = new HttpPost(url);
         List<NameValuePair> content = new ArrayList<>();
+
         Iterator iterator = contentMap.entrySet().iterator();
         while (iterator.hasNext()) {
             Entry<String, String> elem = (Entry<String, String>) iterator.next();
             content.add(new BasicNameValuePair(elem.getKey(), elem.getValue()));
         }
         CloseableHttpResponse response = null;
-        post.addHeader("Content-Type", "application/x-www-form-urlencoded");
+        post.addHeader("Content-Type", contentType);
         try {
             if (content.size() > 0) {
-                UrlEncodedFormEntity entity = new UrlEncodedFormEntity(content,"UTF-8");
+                UrlEncodedFormEntity entity = new UrlEncodedFormEntity(content, "UTF-8");
                 post.setEntity(entity);
             }
             response = httpClient.execute(post);
@@ -74,18 +147,16 @@ public class PostClientSSL {
         return null;
     }
 
-    /**
-     * 释放
-     * @param httpClient
-     */
     private void release(CloseableHttpClient httpClient) {
         if (httpClient != null) {
             try {
                 httpClient.close();
             } catch (IOException e) {
+                logger.error("release httpClient failed {}" , e.getMessage());
                 e.printStackTrace();
             }
         }
     }
+
 
 }

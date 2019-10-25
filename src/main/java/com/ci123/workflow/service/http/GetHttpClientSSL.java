@@ -2,22 +2,17 @@ package com.ci123.workflow.service.http;
 
 import com.ci123.workflow.service.http.ssl.HttpClientSSL;
 import org.apache.http.HttpEntity;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
+
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
+
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.message.BasicNameValuePair;
+
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Copyright (c) 2018-2028 Corp-ci All Rights Reserved
@@ -30,25 +25,18 @@ import java.util.Map;
  */
 public class GetHttpClientSSL {
     private Logger logger = LoggerFactory.getLogger(GetHttpClientSSL.class);
+
     public String doGet(String url) {
         String result = null;
         CloseableHttpClient httpClient = HttpClientSSL.buildSSLCloseableHttpClient();
         HttpGet httpGet = new HttpGet(url);
-
         CloseableHttpResponse response = null;
-        httpGet.setHeader("Content-Type", "application/x-www-form-urlencoded");
         try {
             response = httpClient.execute(httpGet);
-
-            if (response != null && response.getStatusLine().getStatusCode() == 200) {
-                HttpEntity entity = response.getEntity();
-                result = EntityUtils.toString(entity);
-            }
-            //logger.info(result);
-
-            return result;
+            result = dealResponse(response);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("httpClient Get executor failed {}", e.getMessage());
+            return "\"status\":\"error\",\"message\":" + e.getMessage() + "";
         } finally {
             httpGet.abort();
             if (response != null) {
@@ -56,7 +44,21 @@ public class GetHttpClientSSL {
             }
             release(httpClient);
         }
-        return null;
+        return result;
+    }
+
+    private String dealResponse(CloseableHttpResponse response) {
+        String result = "";
+        if (response != null && response.getStatusLine().getStatusCode() == 200) {
+            HttpEntity entity = response.getEntity();
+            try {
+                result = EntityUtils.toString(entity);
+            } catch (IOException e) {
+                logger.error("entity to string failed {}", e.getMessage());
+                return "\"status\":\"error\",\"message\":" + e.getMessage() + "";
+            }
+        }
+        return result;
     }
 
     /**

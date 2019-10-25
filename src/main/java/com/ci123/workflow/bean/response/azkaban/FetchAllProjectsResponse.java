@@ -1,5 +1,6 @@
 package com.ci123.workflow.bean.response.azkaban;
 
+import com.alibaba.fastjson.JSON;
 import com.ci123.workflow.bean.response.azkaban.base.BaseResponse;
 
 import java.util.List;
@@ -17,6 +18,10 @@ public class FetchAllProjectsResponse extends BaseResponse {
 
     public void setProjects(List<Project> projects) {
         this.projects = projects;
+    }
+
+    public String toString(){
+        return JSON.toJSONString(this);
     }
 
 }

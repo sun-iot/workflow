@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sun.org.apache.bcel.internal.generic.RETURN;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.Objects;
 
@@ -48,6 +49,10 @@ public class BaseResponse {
                 this.message = this.error;
             }
         }
+    }
+
+    public String toString(){
+        return JSON.toJSONString(this);
     }
 
 }

@@ -12,7 +12,9 @@ package com.ci123.workflow.conifg.az;
 public class Configuration {
     public static final String DELETE_PROJECT = "{0}/manager?delete=true&project={1}&session.id={2}";
     public static final String FETCH_PROJECT_FLOWS = "{0}/manager?ajax=fetchprojectflows&session.id={1}&project={2}";
+    public static final String FETCH_JOBS_FLOWS="{0}/manager?ajax=fetchflowgraph&session.id={1}&project={2}&flow={3}";
     public static final String EXECUTE_FLOW = "{0}/executor?ajax=executeFlow&session.id={1}&project={2}&flow={3}";
+    public static final String FETCH_RUNNING_EXECUTION_FLOW = "{0}/executor?ajax=executeFlow&session.id={1}&project={2}&flow={3}";
     public static final String CANCEL_FLOW = "{0}/executor?ajax=cancelFlow&session.id={1}&execid={2}";
     public static final String FETCH_EXEC_FLOW = "{0}/executor?ajax=fetchexecflow&session.id={1}&execid={2}";
     public static final String FETCH_EXEC_JOB_LOGS = "{0}/executor?ajax=fetchExecJobLogs&session.id={1}&execid={2}" +

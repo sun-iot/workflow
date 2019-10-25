@@ -1,5 +1,6 @@
 package com.ci123.workflow.bean.response.azkaban;
 
+import com.alibaba.fastjson.JSON;
 import com.ci123.workflow.bean.response.azkaban.base.BaseResponse;
 
 /**
@@ -24,5 +25,10 @@ public class ProjectZipResponse extends BaseResponse {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
     }
 }

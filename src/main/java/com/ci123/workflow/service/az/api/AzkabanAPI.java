@@ -49,6 +49,15 @@ public interface AzkabanAPI {
     FetchFlowsResponse fetchProjectFlows(String projectName);
 
     /**
+     *
+     * @param projectName
+     * @param flowName
+     * @return
+     */
+    FetchExecFlowResponse fetchJobFlows(String projectName , String flowName);
+
+    FetchRunningExecutionFlowResponse fetchRunningExecutionFlow(String projectName , String flowName);
+    /**
      * 执行flow
      *
      * @param projectName 项目名称
