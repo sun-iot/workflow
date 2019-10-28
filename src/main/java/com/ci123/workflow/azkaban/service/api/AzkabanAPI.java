@@ -130,7 +130,7 @@ public interface AzkabanAPI {
      * @param flowId    Flow ID
      * @return FetchScheduleResponse
      */
-    FetchScheduleResponse fetchSchedule(String projectId, String flowId);
+    FetchScheduleResponse fetchSchedule(Integer projectId, Integer flowId);
 
     /**
      * 移除定时任务

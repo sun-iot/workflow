@@ -17,7 +17,7 @@ import lombok.Data;
 @Api(value = "fetchSchedule" , produces = "application/json")
 public class FetchSchedule {
     @ApiModelProperty(value = "project name" , required = true)
-    public String project;
+    public Integer projectId;
     @ApiModelProperty(value = "flow name" , required = true)
-    public String flow ;
+    public Integer flowId ;
 }

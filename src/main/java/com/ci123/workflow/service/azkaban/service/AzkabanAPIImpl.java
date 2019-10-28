@@ -148,7 +148,7 @@ public class AzkabanAPIImpl implements AzkabanAPI {
     }
 
     @Override
-    public FetchScheduleResponse fetchSchedule(String projectId, String flowId) {
+    public FetchScheduleResponse fetchSchedule(Integer projectId, Integer flowId) {
         String result = getClientSSL.doGet(MessageFormat.format(Configuration.FETCH_SCHEDULE, uri, sessionId, projectId, flowId));
         return ResponseHandler.handle(result , FetchScheduleResponse.class);
     }

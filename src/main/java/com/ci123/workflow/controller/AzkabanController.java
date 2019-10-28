@@ -36,7 +36,7 @@ public class AzkabanController {
     @Autowired
     private AzkabanAPI azkabanAPI;
 
-    @RequestMapping(value = "/az/manager/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/azkaban/manager/create", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "create a Azkaban Project ",
             httpMethod = "POST",
@@ -48,7 +48,7 @@ public class AzkabanController {
         return response.toString();
     }
 
-    @GetMapping("/az/manager/delete")
+    @GetMapping("/azkaban/manager/delete")
     @ResponseBody
     @ApiOperation(value = "delete a Azkaban Project , and no response  ",
             httpMethod = "GET")
@@ -68,7 +68,7 @@ public class AzkabanController {
         return projectZipResponse.toString();
     }
 
-    @GetMapping("/az/manager/fetch/flows/project")
+    @GetMapping("/azkaban/manager/fetch/flows/project")
     @ResponseBody
     @ApiOperation(value = "fetch follows of the project",
             httpMethod = "GET",
@@ -78,7 +78,7 @@ public class AzkabanController {
         return fetchFlowsResponse.toString();
     }
 
-    @GetMapping("/az/manager/fetch/flows/job")
+    @GetMapping("/azkaban/manager/fetch/flows/job")
     @ResponseBody
     @ApiOperation(value = "fetch jobs of a flow",
             httpMethod = "GET",
@@ -90,7 +90,7 @@ public class AzkabanController {
         return fetchExecFlowResponse.toString();
     }
 
-    @GetMapping("/az/manager/fetch/execute/flows")
+    @GetMapping("/azkaban/manager/fetch/execute/flows")
     @ResponseBody
     @ApiOperation(value = "fetch executions of a flow",
             httpMethod = "GET",
@@ -103,7 +103,7 @@ public class AzkabanController {
         return response.toString();
     }
 
-    @GetMapping("/az/manager/fetch/execute/running")
+    @GetMapping("/azkaban/manager/fetch/execute/running")
     @ResponseBody
     @ApiOperation(value = "Fetch Running Executions of a Flow ",
             httpMethod = "GET",
@@ -114,7 +114,7 @@ public class AzkabanController {
         return response.toString();
     }
 
-    @GetMapping("/az/manager/execute/flow")
+    @GetMapping("/azkaban/manager/execute/flow")
     @ResponseBody
     @ApiOperation(value = "execute a flow",
             httpMethod = "GET",
@@ -125,7 +125,7 @@ public class AzkabanController {
         return executeFlowResponse.toString();
     }
 
-    @GetMapping("/az/manager/cancel/flow")
+    @GetMapping("/azkaban/manager/cancel/flow")
     @ResponseBody
     @ApiOperation(value = "cancel a flow",
             httpMethod = "GET",
@@ -135,7 +135,7 @@ public class AzkabanController {
         return response.toString();
     }
 
-    @GetMapping("/az/manager/fetch/execute/flow")
+    @GetMapping("/azkaban/manager/fetch/execute/flow")
     @ResponseBody
     @ApiOperation(value = "fetches all the detailed information of that execution",
             httpMethod = "GET",
@@ -145,7 +145,7 @@ public class AzkabanController {
         return response.toString();
     }
 
-    @GetMapping("/az/manager/fetch/execute/logs")
+    @GetMapping("/azkaban/manager/fetch/execute/logs")
     @ResponseBody
     @ApiOperation(value = "",httpMethod = "GET",produces = "application/json")
     public String fetchExecJobLogs(@RequestParam("execid")@ApiParam(value = "The unique id for an execution",required = true) String execid ,
@@ -155,7 +155,9 @@ public class AzkabanController {
         FetchExecJobLogs response = azkabanAPI.fetchExecJobLogs(execid, jobid, offest, length);
         return response.toString();
     }
-    @GetMapping("/az/manager/fetch/project")
+
+    @Deprecated
+    @GetMapping("/azkaban/manager/fetch/project")
     public String fetchAllProjects(){
         FetchAllProjectsResponse response = azkabanAPI.fetchAllProjects();
         return response.toString();
@@ -174,7 +176,7 @@ public class AzkabanController {
     @ResponseBody
     @ApiOperation(value = "Fetch a Schedule",httpMethod = "POST",produces = "application/json",consumes = "application/json")
     public String fetchSchedule(@RequestBody@ApiParam(value = "",required = true) FetchSchedule fetchSchedule){
-        FetchScheduleResponse response = azkabanAPI.fetchSchedule(fetchSchedule.getProject(), fetchSchedule.getFlow());
+        FetchScheduleResponse response = azkabanAPI.fetchSchedule(fetchSchedule.getProjectId(), fetchSchedule.getFlowId());
         return response.toString();
     }
 

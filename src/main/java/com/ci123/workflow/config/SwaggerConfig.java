@@ -1,5 +1,11 @@
 package com.ci123.workflow.config;
 
+import io.github.swagger2markup.GroupBy;
+import io.github.swagger2markup.Language;
+import io.github.swagger2markup.Swagger2MarkupConfig;
+import io.github.swagger2markup.Swagger2MarkupConverter;
+import io.github.swagger2markup.builder.Swagger2MarkupConfigBuilder;
+import io.github.swagger2markup.markup.builder.MarkupLanguage;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -9,6 +15,10 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+
+import java.net.URL;
+import java.nio.file.Paths;
+
 /**
  * Copyright (c) 2018-2028 Corp-ci All Rights Reserved
  * <p>
@@ -54,5 +64,6 @@ public class SwaggerConfig {
                 .contact(contact)
                 .build();
     }
+
 
 }
