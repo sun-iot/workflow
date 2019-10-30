@@ -1,7 +1,7 @@
 package com.ci123.workflow.azkaban.service.proxy;
 
 import com.ci123.workflow.azkaban.bean.response.base.BaseResponse;
-import com.ci123.workflow.service.azkaban.service.AzkabanAPIImpl;
+import com.ci123.workflow.azkaban.service.service.AzkabanAPIImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

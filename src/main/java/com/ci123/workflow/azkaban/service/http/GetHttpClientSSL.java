@@ -47,6 +47,11 @@ public class GetHttpClientSSL {
         return result;
     }
 
+    /**
+     * 释放
+     * @param response
+     * @return
+     */
     private String dealResponse(CloseableHttpResponse response) {
         String result = "";
         if (response != null && response.getStatusLine().getStatusCode() == 200) {

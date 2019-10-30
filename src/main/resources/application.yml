@@ -6,3 +6,6 @@ azkaban:
   url: https://192.168.1.111:8443
   username: admin
   password: admin
+
+oozie:
+  url: http://192.168.1.111:11000/oozie/
